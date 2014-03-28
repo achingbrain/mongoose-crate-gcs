@@ -19,10 +19,10 @@ var PostSchema = new mongoose.Schema({
 PostSchema.plugin(crate, {
   storage: new GCS({
     iss: "A Google service account email",
-    scope: "Google Cloud Storage scope",
     bucket: "Google Cloud Storage bucket",
-    keyFile: "/path/to/keyfile",
+    keyFile: "/path/to/keyfile", // pass either key or keyFile
     key: "key as a string", // pass either key or keyFile
+    scope: "<scope-here>", // defaults to https://www.googleapis.com/auth/devstorage.full_control
     acl: "<acl-here>" // defaults to public-read
   }),
   fields: {
