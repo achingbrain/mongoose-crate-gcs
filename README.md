@@ -17,7 +17,7 @@ var PostSchema = new mongoose.Schema({
 });
 
 PostSchema.plugin(crate, {
-  storage: new S3({
+  storage: new GCS({
     iss: "A Google service account email",
     scope: "Google Cloud Storage scope",
     bucket: "Google Cloud Storage bucket",
