@@ -85,24 +85,25 @@ describe("GCS", function() {
 		// if you want to run this test, remove the next line and add your GCS details below
 		return done();
 
+		var keyFile = "PUT_THE_PATH_TO_YOUR_KEY_FILE_HERE";
+		var iss = "PUT_YOUR_@developer.gserviceaccount.com_EMAIL_HERE";
 		var bucket =  "PUT_YOUR_BUCKET_HERE";
-		var key = "PUT_YOUR_KEY_HERE";
-		var secret = "PUT_YOUR_BUCKET_HERE";
-		var region = "PUT_YOUR_REGION_HERE";
+
 		var sourceFile = path.resolve(__dirname + "/./fixtures/node_js_logo.png");
 
 		var gcs = new GCS({
-			key: key,
-			secret: secret,
-			bucket: bucket,
-			region: region
+			keyFile: keyFile,
+			iss: iss,
+			bucket: bucket
 		});
 
 		var gcsUrl;
 
 		async.waterfall([function(callback) {
 			// save the file
-			gcs.save(sourceFile, callback);
+			gcs.save({
+				path: sourceFile
+			}, callback);
 		}, function(url, callback) {
 			gcsUrl = url;
 
