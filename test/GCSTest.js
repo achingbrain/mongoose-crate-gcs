@@ -2,6 +2,7 @@ var should = require("should"),
 	path = require("path"),
 	request = require("request"),
 	async = require("async"),
+	fs = require("fs"),
 	GCS = require("../lib/GCS");
 
 describe("GCS", function() {
@@ -81,6 +82,7 @@ describe("GCS", function() {
 	})
 
 	it("should store and remove a file", function(done) {
+		var sourceFile = path.resolve(__dirname + "/./fixtures/node_js_logo.png");
 
 		// if you want to run this test, remove the next line and add your GCS details below
 		return done();
@@ -88,8 +90,6 @@ describe("GCS", function() {
 		var keyFile = "PUT_THE_PATH_TO_YOUR_KEY_FILE_HERE";
 		var iss = "PUT_YOUR_@developer.gserviceaccount.com_EMAIL_HERE";
 		var bucket =  "PUT_YOUR_BUCKET_HERE";
-
-		var sourceFile = path.resolve(__dirname + "/./fixtures/node_js_logo.png");
 
 		var gcs = new GCS({
 			keyFile: keyFile,
@@ -101,8 +101,13 @@ describe("GCS", function() {
 
 		async.waterfall([function(callback) {
 			// save the file
+			fs.stat(sourceFile, callback);
+		}, function(stats, callback) {
+			// save the file
 			gcs.save({
-				path: sourceFile
+				path: sourceFile,
+				size: stats.size,
+				type: "image/png"
 			}, callback);
 		}, function(url, callback) {
 			gcsUrl = url;
@@ -115,7 +120,7 @@ describe("GCS", function() {
 
 			// remove the file
 			gcs.remove({url: gcsUrl}, callback);
-		}, function(message, callback) {
+		}, function(response, body, callback) {
 			// make sure it's not there any more
 			request.head(gcsUrl, callback);
 		}, function(response, body, callback) {
