@@ -1,2 +1,2 @@
 
-module.exports = require("./lib/GCS");
+module.exports = require('./lib/GCS')
