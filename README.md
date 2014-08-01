@@ -23,7 +23,10 @@ PostSchema.plugin(crate, {
     keyFile: '/path/to/keyfile', // pass either key or keyFile
     key: 'key as a string', // pass either key or keyFile
     scope: '<scope-here>', // defaults to https://www.googleapis.com/auth/devstorage.full_control
-    acl: '<acl-here>' // defaults to public-read
+    acl: '<acl-here>', // defaults to public-read
+    path: function(attachment) { // where the file is stored in the bucket - defaults to this function
+      return return '/' + path.basename(attachment.path)
+    }
   }),
   fields: {
     file: {}
