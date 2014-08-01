@@ -3,7 +3,7 @@
   "name": "mongoose-crate-gcs",
   "description": "mongoose-crate StorageProvider that uploads files to Google Cloud Services",
   "keywords": ["mongoose", "crate", "gcs", "google", "uploads", "attachments", "files"],
-  "version": "1.0.2",
+  "version": "1.1.0",
   "homepage": "https://github.com/achingbrain/mongoose-crate-gcs",
   "repository": {
     "type": "git",
