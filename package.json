@@ -21,7 +21,9 @@
   "main": "index.js",
   "scripts": {
     "lint": "standard",
-    "test": "istanbul cover ./node_modules/mocha/bin/_mocha",
+    "test": "mocha",
+    "test:coverage": "istanbul --include-all-sources cover _mocha",
+    "test:coverage:check": "istanbul --include-all-sources cover _mocha && istanbul check-coverage --statement 100 --branch 100 --function 100",
     "coveralls": "istanbul cover _mocha && cat ./coverage/lcov.info | coveralls"
   },
   "dependencies": {
@@ -43,6 +45,6 @@
   },
   "pre-commit": [
     "lint",
-    "test"
+    "test:coverage:check"
   ]
 }

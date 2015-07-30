@@ -238,4 +238,78 @@ describe('GCS', function () {
       done()
     })
   })
+
+  it('should throw errors from GAPI creation', function () {
+    var node_gcs = {
+      gapitoken: sinon.stub().callsArgWith(1, new Error('Urk!'))
+    }
+
+    var GCS = proxyquire('../lib/GCS', {
+      'node-gcs': node_gcs
+    });
+
+    (function () {
+      return new GCS({
+        keyFile: 'foo',
+        iss: 'bar',
+        bucket: 'bucket'
+      })
+    }).should.throw()
+  })
+
+  it('should defer saving an attachment until connected', function (done) {
+    var node_gcs = {
+      gapitoken: sinon.stub()
+    }
+
+    var GCS = proxyquire('../lib/GCS', {
+      'node-gcs': node_gcs
+    })
+
+    var gcs = new GCS({
+      keyFile: 'foo',
+      iss: 'bar',
+      bucket: 'bucket'
+    })
+
+    gcs.save({
+      path: 'foo'
+    }, done)
+
+    gcs._client = {
+      putStream: sinon.stub().callsArgWith(4, null, {
+        request: {}
+      })
+    }
+    gcs.emit('connected')
+  })
+
+  it('should pass back gcs errors', function (done) {
+    var error = new Error('Urk!')
+    var node_gcs = {
+      gapitoken: sinon.stub()
+    }
+
+    var GCS = proxyquire('../lib/GCS', {
+      'node-gcs': node_gcs
+    })
+
+    var gcs = new GCS({
+      keyFile: 'foo',
+      iss: 'bar',
+      bucket: 'bucket'
+    })
+
+    gcs.save({
+      path: 'foo'
+    }, function (err) {
+      error.should.equal(err)
+      done()
+    })
+
+    gcs._client = {
+      putStream: sinon.stub().callsArgWith(4, error)
+    }
+    gcs.emit('connected')
+  })
 })
