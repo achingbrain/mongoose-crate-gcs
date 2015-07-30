@@ -2,7 +2,7 @@ var should = require('should')
 var sinon = require('sinon')
 var proxyquire = require('proxyquire')
 var path = require('path')
-var GCS = require('../lib/GCS')
+var GCS = require('../')
 var describe = require('mocha').describe
 var it = require('mocha').it
 
