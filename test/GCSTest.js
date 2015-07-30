@@ -1,33 +1,32 @@
-var should = require('should'),
-  sinon = require('sinon'),
-  proxyquire = require('proxyquire'),
-  path = require('path'),
-  request = require('request'),
-  async = require('async'),
-  fs = require('fs'),
-  GCS = require('../lib/GCS')
+var should = require('should')
+var sinon = require('sinon')
+var proxyquire = require('proxyquire')
+var path = require('path')
+var GCS = require('../lib/GCS')
+var describe = require('mocha').describe
+var it = require('mocha').it
 
-describe('GCS', function() {
+describe('GCS', function () {
 
-  it('should require options', function(done) {
-    (function() {
-      new GCS()
+  it('should require options', function (done) {
+    (function () {
+      return new GCS()
     }).should.throw()
 
     done()
   })
 
-  it('should require an email', function(done) {
-    (function() {
-      new GCS({})
+  it('should require an email', function (done) {
+    (function () {
+      return new GCS({})
     }).should.throw()
 
     done()
   })
 
-  it('should require a scope', function(done) {
-    (function() {
-      new GCS({
+  it('should require a scope', function (done) {
+    (function () {
+      return new GCS({
         iss: 'foo'
       })
     }).should.throw()
@@ -35,9 +34,9 @@ describe('GCS', function() {
     done()
   })
 
-  it('should require a bucket', function(done) {
-    (function() {
-      new GCS({
+  it('should require a bucket', function (done) {
+    (function () {
+      return new GCS({
         iss: 'foo',
         scope: 'bar'
       })
@@ -46,9 +45,9 @@ describe('GCS', function() {
     done()
   })
 
-  it('should require a key', function(done) {
-    (function() {
-      new GCS({
+  it('should require a key', function (done) {
+    (function () {
+      return new GCS({
         iss: 'foo',
         scope: 'bar',
         bucket: 'baz'
@@ -58,7 +57,7 @@ describe('GCS', function() {
     done()
   })
 
-  it('should set a default acl', function(done) {
+  it('should set a default acl', function (done) {
     var gcs = new GCS({
       iss: 'foo',
       scope: 'bar',
@@ -70,7 +69,7 @@ describe('GCS', function() {
     done()
   })
 
-  it('should accept an acl', function(done) {
+  it('should accept an acl', function (done) {
     var gcs = new GCS({
       iss: 'foo',
       scope: 'bar',
@@ -83,7 +82,7 @@ describe('GCS', function() {
     done()
   })
 
-  it('should override path when storing a file', function(done) {
+  it('should override path when storing a file', function (done) {
     var overridenUrl = '/baz'
     var sourceFile = path.resolve(__dirname + '/./fixtures/node_js_logo.png')
 
@@ -91,7 +90,7 @@ describe('GCS', function() {
       putStream: sinon.stub()
     }
 
-    var node_gcs = function() {
+    var node_gcs = function () {
       return client
     }
     node_gcs.gapitoken = sinon.stub()
@@ -107,7 +106,7 @@ describe('GCS', function() {
       keyFile: 'foo',
       iss: 'bar',
       bucket: 'bucket',
-      path: function() {
+      path: function () {
         return overridenUrl
       }
     })
@@ -116,7 +115,7 @@ describe('GCS', function() {
       path: sourceFile,
       size: 1234,
       type: 'image/png'
-    }, function(error, url) {
+    }, function (error, url) {
       should(error).not.ok
 
       url.should.equal(overridenUrl)
@@ -128,14 +127,14 @@ describe('GCS', function() {
     })
   })
 
-  it('should store a file', function(done) {
+  it('should store a file', function (done) {
     var sourceFile = path.resolve(__dirname + '/./fixtures/node_js_logo.png')
 
     var client = {
       putStream: sinon.stub()
     }
 
-    var node_gcs = function() {
+    var node_gcs = function () {
       return client
     }
     node_gcs.gapitoken = sinon.stub()
@@ -157,7 +156,7 @@ describe('GCS', function() {
         path: sourceFile,
         size: 1234,
         type: 'image/png'
-    }, function(error, url) {
+    }, function (error, url) {
       should(error).not.ok
 
       url.should.equal('/foo')
@@ -166,7 +165,7 @@ describe('GCS', function() {
     })
   })
 
-  it('should remove a file', function(done) {
+  it('should remove a file', function (done) {
     var url = '/foo'
     var bucket = 'bucket'
 
@@ -204,7 +203,7 @@ describe('GCS', function() {
     })
   })
 
-  it('should not remove a file when model has no url', function(done) {
+  it('should not remove a file when model has no url', function (done) {
     var bucket = 'bucket'
 
     var client = {

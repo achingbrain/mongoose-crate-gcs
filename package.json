@@ -2,7 +2,16 @@
   "author": "Alex Potsides",
   "name": "mongoose-crate-gcs",
   "description": "mongoose-crate StorageProvider that uploads files to Google Cloud Services",
-  "keywords": ["mongoose", "crate", "gcs", "google", "uploads", "attachments", "files"],
+  "license": "ISC",
+  "keywords": [
+    "mongoose",
+    "crate",
+    "gcs",
+    "google",
+    "uploads",
+    "attachments",
+    "files"
+  ],
   "version": "1.1.0",
   "homepage": "https://github.com/achingbrain/mongoose-crate-gcs",
   "repository": {
@@ -11,6 +20,7 @@
   },
   "main": "index.js",
   "scripts": {
+    "lint": "standard",
     "test": "istanbul cover ./node_modules/mocha/bin/_mocha",
     "coveralls": "istanbul cover _mocha && cat ./coverage/lcov.info | coveralls"
   },
@@ -19,14 +29,20 @@
     "check-types": "^1.2"
   },
   "devDependencies": {
-    "mocha": "^1.18",
-    "should": "^4.0",
-    "mongoose": "^3.8",
-    "istanbul": "^0.3",
-    "sinon": "^1.9",
-    "coveralls": "^2.8",
-    "request": "^2.34",
     "async": "^0.9",
-    "proxyquire": "^1.0"
-  }
+    "coveralls": "^2.8",
+    "istanbul": "^0.3",
+    "mocha": "^1.18",
+    "mongoose": "^3.8",
+    "pre-commit": "^1.0.10",
+    "proxyquire": "^1.0",
+    "request": "^2.34",
+    "should": "^4.0",
+    "sinon": "^1.9",
+    "standard": "^4.5.4"
+  },
+  "pre-commit": [
+    "lint",
+    "test"
+  ]
 }
