@@ -25,19 +25,19 @@
     "coveralls": "istanbul cover _mocha && cat ./coverage/lcov.info | coveralls"
   },
   "dependencies": {
-    "node-gcs": "^0.0",
-    "check-types": "^1.2"
+    "check-types": "^3.3.1",
+    "node-gcs": "^0.0"
   },
   "devDependencies": {
-    "async": "^0.9",
+    "async": "^1.4.0",
     "coveralls": "^2.8",
     "istanbul": "^0.3",
-    "mocha": "^1.18",
-    "mongoose": "^3.8",
+    "mocha": "^2.2.5",
+    "mongoose": "^4.1.0",
     "pre-commit": "^1.0.10",
     "proxyquire": "^1.0",
     "request": "^2.34",
-    "should": "^4.0",
+    "should": "^7.0.2",
     "sinon": "^1.9",
     "standard": "^4.5.4"
   },
