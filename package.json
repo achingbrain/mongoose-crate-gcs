@@ -27,21 +27,21 @@
     "coveralls": "istanbul cover _mocha && cat ./coverage/lcov.info | coveralls"
   },
   "dependencies": {
-    "check-types": "^3.3.1",
+    "check-types": "^7.0.0",
     "node-gcs": "^0.0"
   },
   "devDependencies": {
     "async": "^1.4.0",
     "coveralls": "^2.8",
-    "istanbul": "^0.3",
+    "istanbul": "^0.4.3",
     "mocha": "^2.2.5",
     "mongoose": "^4.1.0",
     "pre-commit": "^1.0.10",
     "proxyquire": "^1.0",
     "request": "^2.34",
-    "should": "^7.0.2",
+    "should": "^9.0.2",
     "sinon": "^1.9",
-    "standard": "^4.5.4"
+    "standard": "^7.1.2"
   },
   "pre-commit": [
     "lint",
