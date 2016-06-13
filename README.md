@@ -7,11 +7,12 @@ A StorageProvider for mongoose-crate that stores files in Google Cloud Storage.
 ## Usage
 
 ```javascript
-var mongoose = require('mongoose'),
-  crate = require('mongoose-crate'),
-  GCS = require('mongoose-crate-gcs')
+const mongoose = require('mongoose')
+const crate = require('mongoose-crate')
+const GCS = require('mongoose-crate-gcs')
+const path = require('path')
 
-var PostSchema = new mongoose.Schema({
+const PostSchema = new mongoose.Schema({
   title: String,
   description: String
 })
@@ -24,23 +25,21 @@ PostSchema.plugin(crate, {
     key: 'key as a string', // pass either key or keyFile
     scope: '<scope-here>', // defaults to https://www.googleapis.com/auth/devstorage.full_control
     acl: '<acl-here>', // defaults to public-read
-    path: function(attachment) { // where the file is stored in the bucket - defaults to this function
-      return return '/' + path.basename(attachment.path)
-    }
+    path: (attachment) => `/${path.basename(attachment.path)}` // where the file is stored in the bucket - defaults to this function
   }),
   fields: {
     file: {}
   }
 });
 
-var Post = mongoose.model('Post', PostSchema)
+const Post = mongoose.model('Post', PostSchema)
 ```
 
 .. then later:
 
 ```javascript
-var post = new Post()
-post.attach('image', {path: '/path/to/image'}, function(error) {
+const post = new Post()
+post.attach('image', {path: '/path/to/image'}, (error) => {
 	// file is now uploaded and post.file is populated e.g.:
 	// post.file.url
 });
