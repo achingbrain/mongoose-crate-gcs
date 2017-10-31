@@ -26,6 +26,9 @@ PostSchema.plugin(crate, {
     scope: '<scope-here>', // defaults to https://www.googleapis.com/auth/devstorage.full_control
     acl: '<acl-here>', // defaults to public-read
     path: (attachment) => `/${path.basename(attachment.path)}` // where the file is stored in the bucket - defaults to this function
+    headers: { // Optinoal headers sendt to gcs
+      'Cache-Control': 'private'
+    }
   }),
   fields: {
     file: {}
