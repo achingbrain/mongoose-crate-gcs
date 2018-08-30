@@ -262,7 +262,7 @@ describe('GCS', () => {
     })
 
     gcs.save({
-      path: 'foo'
+      path: 'index.js'
     }, done)
 
     gcs._client = {
@@ -290,7 +290,7 @@ describe('GCS', () => {
     })
 
     gcs.save({
-      path: 'foo'
+      path: 'index.js'
     }, (err) => {
       error.should.equal(err)
       done()
@@ -300,5 +300,45 @@ describe('GCS', () => {
       putStream: sinon.stub().callsArgWith(4, error)
     }
     gcs.emit('connected')
+  })
+
+  it('should override add options.headers to headers putstream', (done) => {
+    const sourceFile = path.resolve(path.join(__dirname, '.', 'fixtures', 'node_js_logo.png'))
+
+    const client = {
+      putStream: sinon.stub()
+    }
+
+    const nodeGcs = function () {
+      return client
+    }
+    nodeGcs.gapitoken = sinon.stub()
+    nodeGcs.gapitoken.callsArg(1)
+
+    client.putStream.callsArgWith(4, undefined, {request: {}})
+
+    const GCS = proxyquire('../lib/GCS', {
+      'node-gcs': nodeGcs
+    })
+
+    const gcs = new GCS({
+      keyFile: 'foo',
+      iss: 'bar',
+      bucket: 'bucket',
+      headers: {
+        'Cache-Control': 'private'
+      }
+    })
+
+    gcs.save({
+      path: sourceFile,
+      size: 1234,
+      type: 'image/png'
+    }, (error, url) => {
+      should(error).not.ok
+      // headers should contain Cache-Control
+      client.putStream.getCall(0).args[3]['Cache-Control'].should.equal('private')
+      done()
+    })
   })
 })
