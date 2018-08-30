@@ -28,17 +28,17 @@
   },
   "dependencies": {
     "check-types": "^7.0.0",
-    "node-gcs": "^0.0"
+    "node-gcs": "0.0.4"
   },
   "devDependencies": {
     "async": "^2.1.4",
-    "coveralls": "^2.8",
+    "coveralls": "^3.0.2",
     "istanbul": "^0.4.3",
-    "mocha": "^3.2.0",
+    "mocha": "^5.2.0",
     "mongoose": "^4.1.0",
     "pre-commit": "^1.0.10",
     "proxyquire": "^1.0",
-    "request": "^2.34",
+    "request": "^2.88.0",
     "should": "^11.1.2",
     "sinon": "^1.9",
     "standard": "^8.6.0"

@@ -262,7 +262,7 @@ describe('GCS', () => {
     })
 
     gcs.save({
-      path: 'foo'
+      path: 'index.js'
     }, done)
 
     gcs._client = {
@@ -290,7 +290,7 @@ describe('GCS', () => {
     })
 
     gcs.save({
-      path: 'foo'
+      path: 'index.js'
     }, (err) => {
       error.should.equal(err)
       done()
